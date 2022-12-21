@@ -11,8 +11,10 @@ class Book extends Model
 
     protected $fillable = [
         'Judul',
+        'Penulis',
         'PublishDate',
-        'stock'
+        'stock',
+        'image'
     ];
 
  

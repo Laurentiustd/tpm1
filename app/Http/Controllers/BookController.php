@@ -36,10 +36,16 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $filename = $request->Judul.'_'.$request->title.'.'.$extension;
+        $request->file('image')->storeAs('/public/Book/',$filename);
+
         Book::create([
             'Judul'=> $request -> title,
             'PublishDate'=> $request -> date,
-            'stock'=> $request -> stock
+            'Penulis'=>$request->author,
+            'stock'=> $request -> stock,
+            'image'=>$filename
         ]);
 
         return redirect('/home');
@@ -67,7 +73,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Book = Book::findOrFail($id);
+
+        return view('editBook', compact('Book'));
     }
 
     /**
@@ -79,7 +87,19 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $extension = $request->file('image')->getClientOriginalExtension();
+        $filename = $request->Judul.'_'.$request->title.'.'.$extension;
+        $request->file('image')->storeAs('/public/Book/',$filename);
+        
+        Book::findOrFail($id)->update([
+            'Judul'=>$request->title,
+            'Penulis'=>$request->author,
+            'PublishDate'=>$request->date,
+            'stock'=>$request->stock,
+            'image'=>$filename
+        ]);
+
+        return redirect('/home');
     }
 
     /**
@@ -90,6 +110,9 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Book::destroy($id);
+
+        return redirect('/home');
+        
     }
 }

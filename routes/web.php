@@ -24,3 +24,6 @@ Route::get('/home', [BookController::class, 'index']);
 Route::get('/createBook', [BookController::class, 'create']);
 Route::post('/storeBook', [BookController::class, 'store']);
 Route::get('/showBook/{id}', [BookController::class, 'show']);
+Route::get('/editBook/{id}', [BookController::class, 'edit']);
+Route::patch('/updateBook/{id}', [BookController::class, 'update']);
+Route::delete('/deleteBook/{id}', [BookController::class, 'destroy']);
