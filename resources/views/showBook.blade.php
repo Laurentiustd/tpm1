@@ -9,6 +9,7 @@
       <h5 class="card-title">{{$Book->Judul}}</h5>
       <h5 class="card-title">{{$Book->Penulis}}</h5>
       <p class="card-text">{{$Book->PublishDate}}</p>
+      <p class="card-text">{{$Book->category->name}}</p>
       <a href="#" class="btn btn-primary">{{$Book->stock}}</a>
       <a href="/editBook/{{$Book->id}}">Edit</a>
       <form action="/deleteBook/{{$Book->id}}" method="POST">

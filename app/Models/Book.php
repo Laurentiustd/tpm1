@@ -14,8 +14,11 @@ class Book extends Model
         'Penulis',
         'PublishDate',
         'stock',
-        'image'
+        'image',
+        'category_id'
     ];
 
- 
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

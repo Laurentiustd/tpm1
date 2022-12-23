@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\category;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -25,7 +26,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('formBooks');
+        $category = category::all();
+        return view('formBooks', compact('category'));
     }
 
     /**
@@ -36,6 +38,17 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validated = $request->validate([
+            // 'Judul' => 'required|unique:books|min:5|max:255',
+            'author'=>'required',
+            'date'=> 'required',
+            'stock'=>'required|integer|min:5',
+            'image'=>'required|mimes:jpg,png'
+
+ 
+        ]);
+
         $extension = $request->file('image')->getClientOriginalExtension();
         $filename = $request->Judul.'_'.$request->title.'.'.$extension;
         $request->file('image')->storeAs('/public/Book/',$filename);
@@ -45,7 +58,8 @@ class BookController extends Controller
             'PublishDate'=> $request -> date,
             'Penulis'=>$request->author,
             'stock'=> $request -> stock,
-            'image'=>$filename
+            'image'=>$filename,
+            'category_id'=>$request->category
         ]);
 
         return redirect('/home');
